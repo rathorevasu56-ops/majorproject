@@ -1,0 +1,312 @@
+<% layout("/listings/layouts/boilerplate") %>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #f7f7f7;
+    color: #1a1a1a;
+  }
+
+  /* ── PAGE HEADER ── */
+  .listings-header {
+    padding: 36px 80px 0;
+  }
+
+  .listings-header h1 {
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+  }
+
+  .listings-header p {
+    font-size: 14px;
+    color: #717171;
+    margin-top: 4px;
+  }
+
+  /* ── GRID ── */
+  .listings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 28px;
+    padding: 32px 80px 60px;
+  }
+
+  /* ── CARD ── */
+  .listing-card {
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid #efefef;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    cursor: pointer;
+    position: relative;
+    text-decoration: none;
+    display: block;
+    color: inherit;
+  }
+
+  .listing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.10);
+  }
+
+  /* ── IMAGE WRAPPER ── */
+  .card-img-wrap {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+  }
+
+  .card-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    display: block;
+  }
+
+  .listing-card:hover .card-img-wrap img {
+    transform: scale(1.05);
+  }
+
+  /* ── CATEGORY BADGE ── */
+  .card-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(6px);
+    border-radius: 30px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: 0.2px;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+
+  /* ── WISHLIST HEART ── */
+  .card-heart {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0.85;
+    transition: transform 0.2s;
+    line-height: 1;
+  }
+
+  .card-heart:hover { transform: scale(1.2); opacity: 1; }
+
+  /* ── CARD BODY ── */
+  .card-body {
+    padding: 14px 16px 18px;
+  }
+
+  .card-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.3;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .card-rating {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1a1a;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    flex-shrink: 0;
+  }
+
+  .card-location {
+    font-size: 13px;
+    color: #717171;
+    margin-top: 3px;
+  }
+
+  .card-owner {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .owner-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ff385c;
+    color: white;
+    font-size: 9px;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .card-divider {
+    height: 1px;
+    background: #f2f2f2;
+    margin: 10px 0;
+  }
+
+  .card-price {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+
+  .card-price span {
+    font-size: 13px;
+    font-weight: 400;
+    color: #717171;
+  }
+
+  /* ── EMPTY STATE ── */
+  .no-listings {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 80px 20px;
+  }
+
+  .no-listings-emoji { font-size: 3.5rem; display: block; margin-bottom: 16px; }
+  .no-listings h2 { font-size: 1.4rem; font-weight: 700; color: #1a1a1a; }
+  .no-listings p { font-size: 14px; color: #717171; margin-top: 6px; }
+
+  .clear-filter-btn {
+    display: inline-block;
+    margin-top: 20px;
+    background: #1a1a1a;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .clear-filter-btn:hover { background: #ff385c; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1280px) {
+    .listings-header, .listings-grid { padding-left: 48px; padding-right: 48px; }
+  }
+  @media (max-width: 1024px) {
+    .listings-header, .listings-grid { padding-left: 32px; padding-right: 32px; }
+  }
+  @media (max-width: 768px) {
+    .listings-header, .listings-grid { padding-left: 20px; padding-right: 20px; }
+    .listings-grid { gap: 18px; }
+  }
+  @media (max-width: 480px) {
+    .listings-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<!-- ── PAGE HEADER ── -->
+<div class="listings-header">
+  <h1>
+    <% if (activeCategory) { %>
+      <%= activeCategory %> stays
+    <% } else { %>
+      Explore all stays
+    <% } %>
+  </h1>
+  <p>
+    <% if (allListings.length > 0) { %>
+      <%= allListings.length %> place<%= allListings.length > 1 ? "s" : "" %> to stay
+    <% } else { %>
+      No listings found
+    <% } %>
+  </p>
+</div>
+
+<!-- ── LISTINGS GRID ── -->
+<div class="listings-grid">
+
+  <% if (allListings.length === 0) { %>
+    <div class="no-listings">
+      <span class="no-listings-emoji">🔍</span>
+      <h2>No places found</h2>
+      <p>Try a different category or search term.</p>
+      <a href="/listings" class="clear-filter-btn">Clear filters</a>
+    </div>
+  <% } %>
+
+  <% for (let listing of allListings) { %>
+    <a href="/listings/<%= listing._id %>" class="listing-card">
+
+      <!-- Image -->
+      <div class="card-img-wrap">
+        <img
+          src="<%= listing.image?.url || 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800' %>"
+          alt="<%= listing.title %>"
+          loading="lazy"
+        >
+
+        <!-- Category badge -->
+        <% if (listing.category) { %>
+          <div class="card-badge"><%= listing.category %></div>
+        <% } %>
+
+        <!-- Heart -->
+        <div class="card-heart">🤍</div>
+      </div>
+
+      <!-- Body -->
+      <div class="card-body">
+
+        <div class="card-top-row">
+          <div class="card-title"><%= listing.title %></div>
+          <div class="card-rating">★ 4.9</div>
+        </div>
+
+        <div class="card-location">
+          📍 <%= listing.location %>, <%= listing.country %>
+        </div>
+
+        <div class="card-owner">
+          <span class="owner-dot">
+            <%= listing.owner ? listing.owner.firstName[0].toUpperCase() : "?" %>
+          </span>
+          Hosted by <%= listing.owner ? listing.owner.firstName : "Wanderlust" %>
+        </div>
+
+        <div class="card-divider"></div>
+
+        <div class="card-price">
+          ₹ <%= listing.price.toLocaleString("en-IN") %>
+          <span>/ night</span>
+        </div>
+
+      </div>
+    </a>
+  <% } %>
+
+</div>

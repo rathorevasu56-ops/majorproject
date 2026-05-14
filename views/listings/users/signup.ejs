@@ -1,0 +1,162 @@
+
+<% layout("/listings/layouts/boilerplate") %>
+
+<style>
+  body {
+    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    min-height: 100vh;
+  }
+
+  .signup-container {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .signup-card {
+    width: 100%;
+    max-width: 500px;
+    border: none;
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  }
+
+  .signup-title {
+    font-weight: 700;
+    color: #ff385c;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-label {
+    font-weight: 600;
+    color: #444;
+  }
+
+  .form-control {
+    border-radius: 12px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    transition: all 0.3s ease;
+  }
+
+  .form-control:focus {
+    border-color: #ff385c;
+    box-shadow: 0 0 0 0.2rem rgba(255, 56, 92, 0.2);
+  }
+
+  .signup-btn {
+    background-color: #ff385c;
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .signup-btn:hover {
+    background-color: #e03150;
+    transform: translateY(-2px);
+  }
+
+  .login-link a {
+    color: #ff385c;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .login-link a:hover {
+    text-decoration: underline;
+  }
+
+  .alert {
+    border-radius: 12px;
+  }
+</style>
+
+<div class="signup-container">
+  <div class="signup-card">
+
+    <h2 class="text-center signup-title">
+      Create Your Account
+    </h2>
+
+    <!-- Flash Messages -->
+    <% if (success && success.length > 0) { %>
+      <div class="alert alert-success">
+        <%= success %>
+      </div>
+    <% } %>
+
+    <% if (error && error.length > 0) { %>
+      <div class="alert alert-danger">
+        <%= error %>
+      </div>
+    <% } %>
+
+    <form action="/signup" method="POST">
+
+      <!-- Email -->
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input
+          type="email"
+          name="email"
+          class="form-control"
+          placeholder="Enter your email"
+          required
+        >
+      </div>
+
+      <!-- First Name -->
+      <div class="mb-3">
+        <label class="form-label">First Name</label>
+        <input
+          type="text"
+          name="firstName"
+          class="form-control"
+          placeholder="First name"
+        >
+      </div>
+
+      <!-- Last Name -->
+      <div class="mb-3">
+        <label class="form-label">Last Name</label>
+        <input
+          type="text"
+          name="lastName"
+          class="form-control"
+          placeholder="Last name"
+        >
+      </div>
+
+      <!-- Password -->
+      <div class="mb-4">
+        <label class="form-label">Password</label>
+        <input
+          type="password"
+          name="password"
+          class="form-control"
+          placeholder="Create a password"
+          required
+        >
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="btn signup-btn w-100">
+        Sign Up
+      </button>
+
+    </form>
+
+    <p class="text-center mt-4 login-link">
+      Already have an account?
+      <a href="/login">Login</a>
+    </p>
+
+  </div>
+</div>
+

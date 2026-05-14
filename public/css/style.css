@@ -1,0 +1,467 @@
+body {
+    background-color: pink;
+}
+/* Navbar container */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 30px;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  border-radius: 50px;
+  margin: 10px 20px;
+}
+
+/* Logo */
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #ff385c;
+}
+
+/* Search Bar */
+.search-bar {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  padding: 5px 10px;
+  background: #fff;
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  padding: 8px;
+  width: 700px;
+}
+
+.search-bar button {
+  border: none;
+  background: #ff385c;
+  color: white;
+  border-radius: 50%;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+/* Right side buttons */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.btn {
+  text-decoration: none;
+  background: #ff385c;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.profile {
+  font-size: 20px;
+  text-decoration: none;
+}
+
+/* Hover Effects */
+.btn:hover,
+.search-bar button:hover {
+  background: #e03150;
+}
+/* Footer */
+.footer {
+  background: #f7f7f7;
+  padding: 40px 20px;
+  margin-top: 40px;
+  border-top: 1px solid #ddd;
+}
+
+/* Container */
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+/* Sections */
+.footer-section h3,
+.footer-section h4 {
+  margin-bottom: 10px;
+}
+
+.footer-section p {
+  color: #555;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin: 6px 0;
+}
+
+.footer-section a {
+  text-decoration: none;
+  color: #333;
+}
+
+.footer-section a:hover {
+  color: #ff385c;
+}
+
+/* Social Icons */
+.social-icons a {
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+/* Bottom */
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  color: #777;
+  font-size: 14px;
+}
+/* Card Container */
+.card-col {
+  width: 20rem;
+}
+
+/* Better card look */
+.card {
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+/* Image */
+.card-img-top {
+
+  height: 200px;
+  object-fit: cover;
+}
+
+
+
+/* Title */
+.card-title {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+/* Price */
+.card-price {
+  color: #033454;
+  font-weight: bold;
+}
+/* Page background */
+
+
+
+/* Center form */
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Card */
+.form-card {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  width: 400px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Heading */
+.form-heading {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Input group */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+}
+
+/* Inputs */
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  outline: none;
+  margin-top: 5px;
+  transition: 0.3s;
+}
+
+/* Focus effect */
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #ff385c;
+  box-shadow: 0 0 5px rgba(255,56,92,0.3);
+}
+
+/* Button */
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background: #ff385c;
+  border: none;
+  color: white;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Hover */
+.submit-btn:hover {
+  background: #e03150;
+  transform: translateY(-2px);
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Container */
+.show-container {
+  display: flex;
+  gap: 40px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+/* Image */
+.show-image img {
+  width: 500px;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* Details */
+.show-details {
+  max-width: 500px;
+}
+
+/* Title */
+.show-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* Location */
+.show-location {
+  color: #555;
+  margin-bottom: 10px;
+}
+
+/* Price */
+.show-price {
+  font-size: 22px;
+  color: #ff385c;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* Description */
+.show-description {
+  line-height: 1.6;
+  color: #444;
+}
+
+/* Buttons */
+.show-buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+}
+
+.btn {
+  padding: 10px 18px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* Edit */
+.edit-btn {
+  background-color: #007bff !important;
+  color: white !important;
+  border: none;
+}
+
+.delete-btn {
+  background-color: #dc3545 !important;
+  color: white !important;
+  border: none;
+}
+
+/* Hover */
+.btn:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+  transition: 0.3s;
+}
+/* Container */
+.edit-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+/* Card */
+.edit-card {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 20px;
+  width: 420px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* Heading */
+.edit-heading {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Inputs */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  outline: none;
+}
+
+/* Focus */
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #ff385c;
+  box-shadow: 0 0 5px rgba(255,56,92,0.3);
+}
+
+/* Buttons */
+.edit-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.save-btn {
+  background-color: #28a745;
+}
+
+.cancel-btn {
+  background-color: #6c757d;
+  text-decoration: none;
+  text-align: center;
+}
+
+/* Hover */
+.btn:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+  transition: 0.3s;
+}
+/* Container styling */
+.container {
+  max-width: 600px;
+}
+
+/* Card-style form */
+.container form {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+/* Heading */
+.container h2 {
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Inputs */
+.form-control {
+  border-radius: 10px;
+  padding: 10px;
+  transition: all 0.3s ease;
+}
+
+/* Focus effect */
+.form-control:focus {
+  border-color: #ff385c;
+  box-shadow: 0 0 0 0.2rem rgba(255, 56, 92, 0.25);
+}
+
+/* Button */
+.btn-primary {
+  width: 100%;
+  border-radius: 10px;
+  padding: 10px;
+  font-weight: 500;
+  background-color: #ff385c;
+  border: none;
+}
+
+/* Button hover */
+.btn-primary:hover {
+  background-color: #e03150;
+}
+
+/* Spacing */
+.mb-3 {
+  margin-bottom: 18px;
+}

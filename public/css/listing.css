@@ -1,0 +1,91 @@
+/* ===== Page Background (Blue Premium) ===== */
+body {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ===== Center Container ===== */
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* ===== Form Card ===== */
+.form-card {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  width: 420px;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  backdrop-filter: blur(10px);
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+/* ===== Heading ===== */
+.form-heading {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* ===== Form Group ===== */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+}
+
+/* ===== Inputs ===== */
+.form-control {
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  transition: 0.3s;
+}
+
+/* Focus Effect */
+.form-control:focus {
+  border-color: #2193b0;
+  box-shadow: 0 0 8px rgba(33, 147, 176, 0.4);
+}
+
+/* ===== Validation Text ===== */
+.invalid-feedback {
+  font-size: 13px;
+}
+
+/* ===== Button ===== */
+.submit-btn {
+  background: linear-gradient(135deg, #2193b0, #6dd5ed);
+  color: white;
+  font-weight: 500;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  transition: 0.3s;
+}
+
+/* Hover Effect */
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(33,147,176,0.4);
+}
+
+/* ===== Animation ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,715 @@
+<%- /* paste this whole file into your EJS layout or navbar partial */ %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wanderlust</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brand: #ff385c;
+      --brand-dark: #d90b39;
+      --text-primary: #1a1a1a;
+      --text-muted: #717171;
+      --border: #e4e4e4;
+      --bg: #fff;
+      --bg-hover: #f7f7f7;
+      --radius-pill: 40px;
+      --radius-btn: 22px;
+      --font: 'Plus Jakarta Sans', sans-serif;
+      --shadow-sm: 0 1px 4px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 18px rgba(0,0,0,0.13);
+    }
+
+    body {
+      font-family: var(--font);
+      background: #f5f5f5;
+      color: var(--text-primary);
+    }
+
+    /* ─────────────────────────────
+       NAVBAR WRAPPER
+    ───────────────────────────── */
+    .wl-nav {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 0 80px;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      width: 100%;
+    }
+
+    /* ─────────────────────────────
+       TOP ROW
+    ───────────────────────────── */
+    .wl-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 82px;
+      gap: 20px;
+    }
+
+    /* ─── LOGO ─── */
+    .wl-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .wl-logo-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--brand);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wl-logo-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: white;
+    }
+
+    .wl-logo-text {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--brand);
+      letter-spacing: -0.8px;
+      line-height: 1;
+    }
+
+    .wl-logo-text span {
+      color: var(--text-primary);
+    }
+
+    /* ─── SEARCH PILL ─── */
+    .wl-search {
+      flex: 1;
+      max-width: 600px;
+      display: flex;
+      align-items: center;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-pill);
+      background: var(--bg);
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.25s, border-color 0.25s;
+      height: 58px;
+      overflow: hidden;
+    }
+
+    .wl-search:hover {
+      box-shadow: var(--shadow-md);
+      border-color: #ccc;
+    }
+
+    .wl-seg {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 22px;
+      flex: 1;
+      cursor: pointer;
+      border-radius: var(--radius-pill);
+      transition: background 0.15s;
+      height: 100%;
+      min-width: 0;
+    }
+
+    .wl-seg:hover { background: var(--bg-hover); }
+
+    .wl-seg-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+    }
+
+    .wl-seg input {
+      border: none;
+      outline: none;
+      font-size: 13px;
+      color: var(--text-muted);
+      background: transparent;
+      font-family: var(--font);
+      width: 100%;
+      margin-top: 1px;
+    }
+
+    .wl-seg input::placeholder { color: #bbb; }
+
+    .wl-seg-hint {
+      font-size: 13px;
+      color: #bbb;
+      margin-top: 1px;
+      white-space: nowrap;
+    }
+
+    .wl-sdiv {
+      width: 1px;
+      height: 32px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    .wl-sbtn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--brand);
+      border: none;
+      border-radius: var(--radius-pill);
+      height: 44px;
+      padding: 0 18px 0 14px;
+      margin-right: 7px;
+      cursor: pointer;
+      flex-shrink: 0;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: 0.2px;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .wl-sbtn:hover { background: var(--brand-dark); transform: scale(1.03); }
+
+    .wl-sbtn svg { width: 16px; height: 16px; fill: white; flex-shrink: 0; }
+
+    /* ─── RIGHT SIDE ─── */
+    .wl-right {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .wl-btn-ghost {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: var(--radius-btn);
+      transition: background 0.15s;
+      white-space: nowrap;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font);
+    }
+
+    .wl-btn-ghost:hover { background: var(--bg-hover); }
+
+    .wl-btn-add {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: var(--radius-btn);
+      border: 1.5px solid transparent;
+      transition: background 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+
+    .wl-btn-add:hover {
+      background: var(--bg-hover);
+      border-color: var(--border);
+    }
+
+    .wl-user-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-btn);
+      padding: 6px 8px 6px 14px;
+      cursor: pointer;
+      background: var(--bg);
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .wl-user-pill:hover {
+      box-shadow: 0 2px 12px rgba(0,0,0,0.13);
+      border-color: #ccc;
+    }
+
+    .wl-hamburger {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 2px 0;
+    }
+
+    .wl-hamburger span {
+      display: block;
+      width: 18px;
+      height: 1.5px;
+      background: var(--text-primary);
+      border-radius: 2px;
+    }
+
+    .wl-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--brand);
+      color: white;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ─────────────────────────────
+       CATEGORY BAR
+    ───────────────────────────── */
+    .wl-catbar {
+      display: flex;
+      align-items: stretch;
+      border-top: 1px solid var(--border);
+    }
+
+    .wl-cats {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .wl-cats::-webkit-scrollbar { display: none; }
+
+    .wl-cat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 18px 14px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      opacity: 0.5;
+      transition: opacity 0.2s, border-color 0.2s;
+      flex-shrink: 0;
+    }
+
+    .wl-cat:hover { opacity: 0.85; }
+    .wl-cat.active { opacity: 1; border-bottom-color: var(--text-primary); }
+
+    .wl-cat-emoji {
+      font-size: 24px;
+      line-height: 1;
+      display: block;
+    }
+
+    .wl-cat-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+      letter-spacing: 0.1px;
+    }
+
+    .wl-filter {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 0 18px;
+      cursor: pointer;
+      background: var(--bg);
+      margin: 9px 0 9px 16px;
+      flex-shrink: 0;
+      transition: box-shadow 0.15s, border-color 0.15s;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .wl-filter:hover {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-color: #bbb;
+    }
+
+    .wl-filter svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--text-primary);
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    /* ─────────────────────────────
+       DEMO CONTENT BELOW NAVBAR
+    ───────────────────────────── */
+    .wl-hero {
+      padding: 48px 80px 0;
+    }
+
+    .wl-hero h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.5px;
+    }
+
+    .wl-hero p {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    .wl-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 28px;
+      padding: 32px 80px 60px;
+    }
+
+    .wl-card {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid #efefef;
+    }
+
+    .wl-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+    }
+
+    .wl-card-thumb {
+      width: 100%;
+      height: 210px;
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+    }
+
+    .wl-card-body { padding: 14px 16px 18px; }
+
+    .wl-card-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .wl-card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .wl-card-rating {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .wl-card-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    .wl-card-price {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-top: 10px;
+    }
+
+    .wl-card-price span {
+      font-weight: 400;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    /* ─────────────────────────────
+       RESPONSIVE
+    ───────────────────────────── */
+    @media (max-width: 1280px) {
+      .wl-nav, .wl-hero, .wl-grid { padding-left: 48px; padding-right: 48px; }
+    }
+
+    @media (max-width: 1024px) {
+      .wl-nav, .wl-hero, .wl-grid { padding-left: 32px; padding-right: 32px; }
+      .wl-search { max-width: 420px; }
+    }
+
+    @media (max-width: 900px) {
+      .wl-seg:nth-child(4), .wl-seg:nth-child(6),
+      .wl-sdiv:nth-child(3), .wl-sdiv:nth-child(5) { display: none; }
+      .wl-search { max-width: 300px; }
+      .wl-cat { padding: 12px 10px 14px; }
+    }
+
+    @media (max-width: 768px) {
+      .wl-nav, .wl-hero, .wl-grid { padding-left: 20px; padding-right: 20px; }
+      .wl-top { flex-wrap: wrap; height: auto; padding: 14px 0; gap: 12px; }
+      .wl-search { max-width: 100%; width: 100%; order: 3; flex: unset; }
+      .wl-btn-add { display: none; }
+      .wl-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════
+     WANDERLUST NAVBAR
+═══════════════════════════════════ -->
+<nav class="wl-nav">
+
+  <!-- Top Row -->
+  <div class="wl-top">
+
+    <!-- Logo -->
+    <a href="/listings" class="wl-logo">
+      <div class="wl-logo-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+        </svg>
+      </div>
+      <span class="wl-logo-text">wander<span>lust</span></span>
+    </a>
+
+    <!-- Search Pill -->
+    <form action="/listings/search" method="GET" class="wl-search">
+
+  <!-- WHERE -->
+  <div class="wl-seg" style="flex:1.3">
+
+    <span class="wl-seg-label">
+      Where
+    </span>
+
+    <input
+      type="text"
+      placeholder="Search destinations"
+      name="q"
+      required
+    />
+
+  </div>
+
+  <div class="wl-sdiv"></div>
+
+  <!-- CHECK IN -->
+  <div class="wl-seg">
+
+    <span class="wl-seg-label">
+      Check in
+    </span>
+
+    <input
+      type="date"
+      name="checkin"
+      class="wl-date"
+    />
+
+  </div>
+
+  <div class="wl-sdiv"></div>
+
+  <!-- CHECK OUT -->
+  <div class="wl-seg">
+
+    <span class="wl-seg-label">
+      Check out
+    </span>
+
+    <input
+      type="date"
+      name="checkout"
+      class="wl-date"
+    />
+
+  </div>
+
+  <div class="wl-sdiv"></div>
+
+  <!-- GUESTS -->
+  <div class="wl-seg">
+
+    <span class="wl-seg-label">
+      Who
+    </span>
+
+    <input
+      type="number"
+      min="1"
+      placeholder="Add guests"
+      name="guests"
+      class="wl-guests"
+    />
+
+  </div>
+
+  <!-- BUTTON -->
+  <button
+    class="wl-sbtn"
+    type="submit"
+    aria-label="Search"
+  >
+
+    <svg
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"
+        stroke="white"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        fill="none"
+      />
+    </svg>
+
+    Search
+
+  </button>
+
+</form>
+
+    <!-- Right Side -->
+    <div class="wl-right">
+
+      <a href="/listings/new" class="wl-btn-add">+ Add listing</a>
+
+      <!-- EJS: swap comments based on auth state -->
+
+      <!-- NOT logged in -->
+      <a href="/login"  class="wl-btn-ghost">Log in</a>
+      <a href="/signup" class="wl-btn-ghost" style="font-weight:700;">Sign up</a>
+      <a href="/logout"  class="wl-btn-ghost">Log out</a>
+
+
+      <!-- Logged in (replace above two lines with these) -->
+      <!-- <span class="wl-btn-ghost" style="pointer-events:none;">👋 Welcome</span> -->
+      <!-- <a href="/logout" class="wl-btn-ghost">Log out</a> -->
+
+      <!-- User pill -->
+      <div class="wl-user-pill">
+        <div class="wl-hamburger">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="wl-avatar">W</div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Category Bar -->
+  <div class="wl-cats">
+  <a href="/listings" class="wl-cat <%= !activeCategory ? 'active' : '' %>">
+    <span class="wl-cat-emoji">🌍</span>
+    <span class="wl-cat-name">All</span>
+  </a>
+  <a href="/listings?category=Beachfront" class="wl-cat <%= activeCategory === 'Beachfront' ? 'active' : '' %>">
+    <span class="wl-cat-emoji">🏖️</span>
+    <span class="wl-cat-name">Beachfront</span>
+  </a>
+  <a href="/listings?category=Cabins" class="wl-cat <%= activeCategory === 'Cabins' ? 'active' : '' %>">
+    <span class="wl-cat-emoji">🌲</span>
+    <span class="wl-cat-name">Cabins</span>
+  </a>
+  <a href="/listings?category=Mountains" class="wl-cat <%= activeCategory === 'Mountains' ? 'active' : '' %>">
+    <span class="wl-cat-emoji">🏔️</span>
+    <span class="wl-cat-name">Mountains</span>
+  </a>
+  <a href="/listings?category=Castles" class="wl-cat <%= activeCategory === 'Castles' ? 'active' : '' %>">
+    <span class="wl-cat-emoji">🏰</span>
+    <span class="wl-cat-name">Castles</span>
+  </a>
+  <a href="/listings?category=Amazing+pools" class="wl-cat <%= activeCategory === 'Amazing pools' ? 'active' : '' %>">
+    <span class="wl-cat-emoji">🏊</span>
+    <span class="wl-cat-name">Amazing pools</span>
+  </a>
+  <a href="/listings?category=Camping" class="wl-cat <%= activeCategory === 'Camping' ? 'active' : '' %>">
+    <span class="wl-cat-emoji">⛺</span>
+    <span class="wl-cat-name">Camping</span>
+  </a>
+  <a href="/listings?category=Arctic" class="wl-cat <%= activeCategory === 'Arctic' ? 'active' : '' %>">
+    <span class="wl-cat-emoji">❄️</span>
+    <span class="wl-cat-name">Arctic</span>
+  </a>
+  <a href="/listings?category=Luxe" class="wl-cat <%= activeCategory === 'Luxe' ? 'active' : '' %>">
+    <span class="wl-cat-emoji">✨</span>
+    <span class="wl-cat-name">Luxe</span>
+  </a>
+  <a href="/listings?category=Countryside" class="wl-cat <%= activeCategory === 'Countryside' ? 'active' : '' %>">
+    <span class="wl-cat-emoji">🏡</span>
+    <span class="wl-cat-name">Countryside</span>
+  </a>
+  <a href="/listings?category=Lake+front" class="wl-cat <%= activeCategory === 'Lake front' ? 'active' : '' %>">
+    <span class="wl-cat-emoji">🌊</span>
+    <span class="wl-cat-name">Lake front</span>
+  </a>
+  <a href="/listings?category=Boats" class="wl-cat <%= activeCategory === 'Boats' ? 'active' : '' %>">
+    <span class="wl-cat-emoji">⛵</span>
+    <span class="wl-cat-name">Boats</span>
+  </a>
+  <a href="/listings?category=Trending" class="wl-cat <%= activeCategory === 'Trending' ? 'active' : '' %>">
+    <span class="wl-cat-emoji">🔥</span>
+    <span class="wl-cat-name">Trending</span>
+  </a>
+  <a href="/listings?category=Tropical" class="wl-cat <%= activeCategory === 'Tropical' ? 'active' : '' %>">
+    <span class="wl-cat-emoji">🌴</span>
+    <span class="wl-cat-name">Tropical</span>
+  </a>
+  <a href="/listings?category=City+stays" class="wl-cat <%= activeCategory === 'City stays' ? 'active' : '' %>">
+    <span class="wl-cat-emoji">🏙️</span>
+    <span class="wl-cat-name">City stays</span>
+  </a>
+</div>
+
+    <button class="wl-filter">
+      <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg">
+        <line x1="4" y1="6" x2="20" y2="6"/>
+        <line x1="8" y1="12" x2="16" y2="12"/>
+        <line x1="11" y1="18" x2="13" y2="18"/>
+      </svg>
+      Filters
+    </button>
+  </div>
+
+</nav>
+
+
+
+<script>
+  document.querySelectorAll('.wl-cat').forEach(cat => {
+    cat.addEventListener('click', () => {
+      document.querySelectorAll('.wl-cat').forEach(c => c.classList.remove('active'));
+      cat.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

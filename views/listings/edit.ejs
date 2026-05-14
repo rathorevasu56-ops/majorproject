@@ -1,0 +1,148 @@
+<% layout("/listings/layouts/boilerplate") %>
+
+<link rel="stylesheet" href="/css/style.css">
+
+<div class="edit-container">
+  <div class="edit-card">
+    <h2 class="edit-heading">✏️ Edit Listing</h2>
+
+    <form
+      action="/listings/<%= listing._id %>?_method=PUT"
+      method="POST"
+      class="needs-validation"
+      novalidate
+      enctype="multipart/form-data"
+    >
+
+      <!-- Title -->
+      <div class="form-group">
+        <label>Title</label>
+        <input
+          type="text"
+          name="listing[title]"
+          value="<%= listing.title %>"
+          required
+        >
+        <div class="invalid-feedback">Please enter a title.</div>
+      </div>
+
+      <!-- Image -->
+      <div class="form-group">
+        <label>Current Image</label>
+        <img
+          src="<%= listing.image.url %>"
+          alt="current listing image"
+          style="width:100%; max-height:220px; object-fit:cover; border-radius:10px; margin-bottom:8px;"
+        >
+        <label>Update Image</label>
+        <input
+          type="file"
+          name="listing[image]"
+          accept="image/*"
+        >
+      </div>
+
+      <!-- Price -->
+      <div class="form-group">
+        <label>Price (₹)</label>
+        <input
+          type="number"
+          name="listing[price]"
+          value="<%= listing.price %>"
+          min="1"
+          required
+        >
+        <div class="invalid-feedback">Price must be greater than 0.</div>
+      </div>
+
+      <!-- Category ✅ NEW -->
+      <div class="form-group">
+        <label>Category</label>
+        <select name="listing[category]" required>
+          <option value="">-- Select a category --</option>
+          <% const categories = [
+            { value: "Beachfront",    emoji: "🏖️" },
+            { value: "Cabins",        emoji: "🌲" },
+            { value: "Mountains",     emoji: "🏔️" },
+            { value: "Castles",       emoji: "🏰" },
+            { value: "Amazing pools", emoji: "🏊" },
+            { value: "Camping",       emoji: "⛺" },
+            { value: "Arctic",        emoji: "❄️" },
+            { value: "Luxe",          emoji: "✨" },
+            { value: "Countryside",   emoji: "🏡" },
+            { value: "Lake front",    emoji: "🌊" },
+            { value: "Boats",         emoji: "⛵" },
+            { value: "Trending",      emoji: "🔥" },
+            { value: "Tropical",      emoji: "🌴" },
+            { value: "City stays",    emoji: "🏙️" },
+          ]; %>
+          <% for(let cat of categories) { %>
+            <option
+              value="<%= cat.value %>"
+              <%= listing.category === cat.value ? "selected" : "" %>
+            >
+              <%= cat.emoji %> <%= cat.value %>
+            </option>
+          <% } %>
+        </select>
+        <div class="invalid-feedback">Please select a category.</div>
+      </div>
+
+      <!-- Location -->
+      <div class="form-group">
+        <label>Location</label>
+        <input
+          type="text"
+          name="listing[location]"
+          value="<%= listing.location %>"
+          required
+        >
+        <div class="invalid-feedback">Please enter a location.</div>
+      </div>
+
+      <!-- Country -->
+      <div class="form-group">
+        <label>Country</label>
+        <input
+          type="text"
+          name="listing[country]"
+          value="<%= listing.country %>"
+          required
+        >
+        <div class="invalid-feedback">Please enter a country.</div>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label>Description</label>
+        <textarea
+          name="listing[description]"
+          rows="4"
+          required
+        ><%= listing.description %></textarea>
+        <div class="invalid-feedback">Please enter a description.</div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="edit-buttons">
+        <button type="submit" class="btn save-btn">Update</button>
+        <a href="/listings/<%= listing._id %>" class="btn cancel-btn">Cancel</a>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script>
+  // Bootstrap-style client-side validation
+  (() => {
+    const form = document.querySelector(".needs-validation");
+    form.addEventListener("submit", (e) => {
+      if (!form.checkValidity()) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      form.classList.add("was-validated");
+    });
+  })();
+</script>

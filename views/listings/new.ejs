@@ -1,0 +1,133 @@
+<% layout("/listings/layouts/boilerplate") %>
+
+<link rel="stylesheet" href="/css/listing.css">
+
+   <div class="container mt-4">
+  <h2 class="mb-4">Create New Listing ✨</h2>
+
+  <form action="/listings" method="POST" 
+  class="needs-validation"
+   novalidate
+   enctype="multipart/form-data"
+   >
+
+    <!-- Title -->
+    <div class="mb-3">
+      <label class="form-label">Title</label>
+      <input 
+        type="text" 
+        name="listing[title]" 
+        class="form-control" 
+        required
+      >
+      <div class="invalid-feedback">
+        Please enter a title.
+      </div>
+    </div>
+
+    <!-- Image URL -->
+    <!-- Image URL — now optional -->
+
+<!-- Upload Image -->
+<div class="mb-3">
+
+  <label class="form-label">
+    Upload Image
+  </label>
+
+  <input 
+    type="file" 
+    name="listing[image]"
+    class="form-control"
+  >
+
+</div>
+
+    <!-- Price -->
+    <div class="mb-3">
+      <label class="form-label">Price (₹ / night)</label>
+      <input 
+        type="number" 
+        name="listing[price]" 
+        class="form-control" 
+        required
+        min="1"
+      >
+      <div class="invalid-feedback">
+        Price must be greater than 0.
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div class="mb-3">
+      <label class="form-label">Location</label>
+      <input 
+        type="text" 
+        name="listing[location]" 
+        class="form-control" 
+        required
+      >
+      <div class="invalid-feedback">
+        Please enter a location.
+      </div>
+    </div>
+
+
+    
+    <div class="mb-3">
+  <label for="category" class="form-label">Category</label>
+
+  <select
+    name="listing[category]"
+    id="category"
+    class="form-control"
+    required
+  >
+    <option value="">Select Category</option>
+
+    <option value="Trending">Trending</option>
+    <option value="Rooms">Rooms</option>
+    <option value="Iconic Cities">Iconic Cities</option>
+    <option value="Mountains">Mountains</option>
+    <option value="Castles">Castles</option>
+    <option value="Amazing Pools">Amazing Pools</option>
+    <option value="Camping">Camping</option>
+    <option value="Farms">Farms</option>
+    <option value="Arctic">Arctic</option>
+    <option value="Domes">Domes</option>
+  </select>
+</div>
+
+    <!-- Country -->
+    <div class="mb-3">
+      <label class="form-label">Country</label>
+      <input 
+        type="text" 
+        name="listing[country]" 
+        class="form-control" 
+        required
+      >
+      <div class="invalid-feedback">
+        Please enter a country.
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+      <textarea 
+        name="listing[description]" 
+        class="form-control" 
+        rows="3" 
+        required
+      ></textarea>
+      <div class="invalid-feedback">
+        Please enter a description.
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <button class="btn btn-primary">Create Listing</button>
+
+  </form>
+</div>

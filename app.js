@@ -38,7 +38,7 @@ const app = express();
 
 // ================= DATABASE CONNECTION =================
 
-const dbUrl = process.env.ATLASDB_URL;
+const dbUrl = process.env.atlasdb_url;
 
 async function connectDB() {
   try {

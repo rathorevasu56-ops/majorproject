@@ -7,19 +7,24 @@ const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
+
 const session = require("express-session");
 const MongoStore = require("connect-mongo").default;
+
 const flash = require("connect-flash");
+
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 
 const listingRouter = require("./routes/listing");
+
 const Listing = require("./modules/listing");
 const Review = require("./modules/review");
 const User = require("./modules/user");
 
 const wrapAsync = require("./utils/wrapAsync");
 const ExpressError = require("./utils/ExpressError");
+
 const { listingSchema } = require("./utils/schema");
 
 const {
@@ -31,24 +36,26 @@ const {
 const app = express();
 
 
-// ================= DATABASE URL =================
+// ================= DATABASE CONNECTION =================
 
-const dbUrl = process.env.atlasdb_url;
+const dbUrl = process.env.ATLASDB_URL;
 
+async function connectDB() {
+  try {
 
-// ================= MONGODB CONNECTION =================
+    await mongoose.connect(dbUrl);
 
-async function main() {
-  await mongoose.connect(dbUrl);
+    console.log("✅ MongoDB Atlas Connected");
+
+  } catch (err) {
+
+    console.log("❌ Database Connection Error");
+
+    console.log(err);
+  }
 }
 
-main()
-  .then(() => {
-    console.log("✅ MongoDB Connected");
-  })
-  .catch((err) => {
-    console.log("❌ DB Error:", err);
-  });
+connectDB();
 
 
 // ================= VIEW ENGINE =================
@@ -60,7 +67,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 
-// ================= MIDDLEWARE =================
+// ================= EXPRESS MIDDLEWARE =================
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -71,14 +78,47 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // ================= SESSION STORE =================
 
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+
+  crypto: {
+    secret: process.env.SECRET,
+  },
+
+  touchAfter: 24 * 3600,
+});
+
+store.on("error", (err) => {
+  console.log("❌ Session Store Error", err);
+});
 
 
 // ================= SESSION CONFIG =================
 
+const sessionOptions = {
+  store,
+
+  secret: process.env.SECRET,
+
+  resave: false,
+
+  saveUninitialized: false,
+
+  cookie: {
+    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+
+    httpOnly: true,
+  },
+};
+
+app.use(session(sessionOptions));
+
+app.use(flash());
 
 
-
-// ================= PASSPORT =================
+// ================= PASSPORT CONFIG =================
 
 app.use(passport.initialize());
 
@@ -91,7 +131,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 
-// ================= LOCALS =================
+// ================= GLOBAL LOCALS =================
 
 app.use((req, res, next) => {
 
@@ -116,29 +156,27 @@ app.use("/listings", listingRouter);
 
 const validateListing = (req, res, next) => {
 
-  let { error } = listingSchema.validate(req.body);
+  const { error } = listingSchema.validate(req.body);
 
   if (error) {
 
-    let errMsg = error.details.map((el) => el.message).join(",");
+    const errMsg = error.details.map((el) => el.message).join(",");
 
     throw new ExpressError(400, errMsg);
-
-  } else {
-
-    next();
   }
+
+  next();
 };
 
 
-// ================= HOME =================
+// ================= HOME ROUTE =================
 
 app.get("/", (req, res) => {
-  res.send("hi vasu whatsapp");
+  res.redirect("/listings");
 });
 
 
-// ================= SIGNUP =================
+// ================= SIGNUP ROUTES =================
 
 app.get("/signup", (req, res) => {
   res.render("listings/users/signup");
@@ -146,6 +184,7 @@ app.get("/signup", (req, res) => {
 
 app.post(
   "/signup",
+
   wrapAsync(async (req, res, next) => {
 
     try {
@@ -166,7 +205,7 @@ app.post(
           return next(err);
         }
 
-        req.flash("success", "Welcome to Airbnb!");
+        req.flash("success", "Welcome to Wanderlust!");
 
         res.redirect("/listings");
       });
@@ -181,7 +220,7 @@ app.post(
 );
 
 
-// ================= LOGIN =================
+// ================= LOGIN ROUTES =================
 
 app.get("/login", (req, res) => {
   res.render("listings/login");
@@ -189,7 +228,9 @@ app.get("/login", (req, res) => {
 
 app.post(
   "/login",
+
   saveRedirectUrl,
+
   passport.authenticate("local", {
     failureRedirect: "/login",
     failureFlash: true,
@@ -197,9 +238,9 @@ app.post(
 
   (req, res) => {
 
-    req.flash("success", "Welcome back!");
+    req.flash("success", "Welcome Back!");
 
-    let redirectUrl = res.locals.redirectUrl || "/listings";
+    const redirectUrl = res.locals.redirectUrl || "/listings";
 
     delete req.session.redirectUrl;
 
@@ -218,17 +259,18 @@ app.get("/logout", (req, res, next) => {
       return next(err);
     }
 
-    req.flash("success", "Logged out successfully!");
+    req.flash("success", "Logged Out Successfully!");
 
     res.redirect("/listings");
   });
 });
 
 
-// ================= REVIEW CREATE =================
+// ================= CREATE REVIEW =================
 
 app.post(
   "/listings/:id/reviews",
+
   isLoggedIn,
 
   wrapAsync(async (req, res) => {
@@ -245,18 +287,20 @@ app.post(
 
     await listing.save();
 
-    req.flash("success", "Review added successfully!");
+    req.flash("success", "Review Added Successfully!");
 
     res.redirect(`/listings/${listing._id}`);
   })
 );
 
 
-// ================= REVIEW DELETE =================
+// ================= DELETE REVIEW =================
 
 app.delete(
   "/listings/:id/reviews/:reviewId",
+
   isLoggedIn,
+
   isReviewAuthor,
 
   wrapAsync(async (req, res) => {
@@ -269,25 +313,25 @@ app.delete(
 
     await Review.findByIdAndDelete(reviewId);
 
-    req.flash("success", "Review deleted!");
+    req.flash("success", "Review Deleted Successfully!");
 
     res.redirect(`/listings/${id}`);
   })
 );
 
 
-// ================= 404 =================
+// ================= 404 HANDLER =================
 
 app.use((req, res, next) => {
-  next(new ExpressError(404, "Page Not Found!"));
+  next(new ExpressError(404, "Page Not Found"));
 });
 
 
-// ================= ERROR HANDLER =================
+// ================= GLOBAL ERROR HANDLER =================
 
 app.use((err, req, res, next) => {
 
-  let { statusCode = 500, message = "Something went wrong!" } = err;
+  let { statusCode = 500, message = "Something Went Wrong" } = err;
 
   console.log(err);
 
@@ -297,6 +341,8 @@ app.use((err, req, res, next) => {
 
 // ================= SERVER =================
 
-app.listen(8080, () => {
-  console.log("🚀 Server running on http://localhost:8080");
+const port = process.env.PORT || 8080;
+
+app.listen(port, () => {
+  console.log(`🚀 Server Running On Port ${port}`);
 });

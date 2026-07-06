@@ -48,26 +48,21 @@ const listingSchema = new mongoose.Schema({
 
   // ✅ CATEGORY — matches navbar category bar
   category: {
-    type: String,
-    enum: [
-      "Beachfront",
-      "Cabins",
-      "Mountains",
-      "Castles",
-      "Amazing pools",
-      "Camping",
-      "Arctic",
-      "Luxe",
-      "Countryside",
-      "Lake front",
-      "Boats",
-      "Trending",
-      "Tropical",
-      "City stays",
-    ],
-    default: "Trending",
-  },
-
+  type: String,
+  enum: [
+    "Trending",
+    "Rooms",
+    "Iconic Cities",
+    "Mountains",
+    "Castles",
+    "Amazing pools",
+    "Camping",
+    "Farms",
+    "Arctic",
+    "Domes",
+  ],
+  default: "Trending",
+},
   // GEOLOCATION
   geometry: {
     lat: {

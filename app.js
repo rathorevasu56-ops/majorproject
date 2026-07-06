@@ -41,7 +41,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 const store = MongoStore.create({
-  mongoUrl: "mongodb://127.0.0.1:27017/wanderlust"
+  mongoUrl: process.env.atlasdb_url
 });
 
 app.use(session({
@@ -85,7 +85,7 @@ app.use("/listings", listingRouter);
 
 // 🔌 MongoDB Connection
 async function main() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/wanderlust");
+  await mongoose.connect(process.env.atlasdb_url);
 }
 
 main()

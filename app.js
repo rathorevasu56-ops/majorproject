@@ -203,9 +203,8 @@ app.get("/logout", (req, res, next) => {
 
 // Home
 app.get("/", (req, res) => {
-  res.send("hi vasu whatapp");
+  res.redirect("/listings");
 });
-
 // REVIEW CREATE
 app.post(
   "/listings/:id/reviews",
@@ -264,6 +263,7 @@ app.use((err, req, res, next) => {
 });
 
 // 🚀 Start Server
-app.listen(8080, () => {
-  console.log("Server running on http://localhost:8080");
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
